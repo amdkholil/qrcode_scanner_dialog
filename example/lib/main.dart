@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
+import 'package:qrcode_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 
 void main() {
   runApp(const MyApp());

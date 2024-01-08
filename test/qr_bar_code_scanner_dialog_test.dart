@@ -1,10 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
-import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog_platform_interface.dart';
-import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog_method_channel.dart';
+import 'package:qrcode_scanner_dialog/qr_bar_code_scanner_dialog.dart';
+import 'package:qrcode_scanner_dialog/qr_bar_code_scanner_dialog_platform_interface.dart';
+import 'package:qrcode_scanner_dialog/qr_bar_code_scanner_dialog_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class MockQrBarCodeScannerDialogPlatform with MockPlatformInterfaceMixin implements QrBarCodeScannerDialogPlatform {
   @override
