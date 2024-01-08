@@ -13,7 +13,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   final _qrBarCodeScannerDialogPlugin = QrBarCodeScannerDialog();
   String? code;
 
@@ -31,6 +30,7 @@ class _MyAppState extends State<MyApp> {
                   onPressed: () {
                     _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
                         context: context,
+                        cameraFacing: CameraFacing.front,
                         onCode: (code) {
                           setState(() {
                             this.code = code;

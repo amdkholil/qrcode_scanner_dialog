@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import 'qr_bar_code_scanner_dialog_method_channel.dart';
 
@@ -9,8 +10,7 @@ abstract class QrBarCodeScannerDialogPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static QrBarCodeScannerDialogPlatform _instance =
-      MethodChannelQrBarCodeScannerDialog();
+  static QrBarCodeScannerDialogPlatform _instance = MethodChannelQrBarCodeScannerDialog();
 
   /// The default instance of [QrBarCodeScannerDialogPlatform] to use.
   ///
@@ -29,8 +29,7 @@ abstract class QrBarCodeScannerDialogPlatform extends PlatformInterface {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  void scanBarOrQrCode(
-      {BuildContext? context, required Function(String?) onScanSuccess}) {
+  void scanBarOrQrCode({BuildContext? context, required Function(String?) onScanSuccess, CameraFacing? cameraFacing}) {
     throw UnimplementedError('scanBarOrQrCodeWeb() has not been implemented.');
   }
 }

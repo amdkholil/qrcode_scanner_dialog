@@ -8,22 +8,20 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'qr_bar_code_scanner_dialog_platform_interface.dart';
 
 /// An implementation of [QrBarCodeScannerDialogPlatform] that uses method channels.
-class MethodChannelQrBarCodeScannerDialog
-    extends QrBarCodeScannerDialogPlatform {
+class MethodChannelQrBarCodeScannerDialog extends QrBarCodeScannerDialogPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
   final methodChannel = const MethodChannel('qr_bar_code_scanner_dialog');
 
   @override
   Future<String?> getPlatformVersion() async {
-    final version =
-        await methodChannel.invokeMethod<String>('getPlatformVersion');
+    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
     return version;
   }
 
   @override
   void scanBarOrQrCode(
-      {BuildContext? context, required Function(String? code) onScanSuccess}) {
+      {BuildContext? context, required Function(String? code) onScanSuccess, CameraFacing? cameraFacing}) {
     /// context is required to show alert in non-web platforms
     assert(context != null);
 
@@ -40,12 +38,15 @@ class MethodChannelQrBarCodeScannerDialog
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: ScannerWidget(onScanSuccess: (code) {
-                  if (code != null) {
-                    Navigator.pop(context);
-                    onScanSuccess(code);
-                  }
-                }),
+                child: ScannerWidget(
+                  onScanSuccess: (code) {
+                    if (code != null) {
+                      Navigator.pop(context);
+                      onScanSuccess(code);
+                    }
+                  },
+                  cameraFacing: cameraFacing ?? CameraFacing.back,
+                ),
               ),
             ));
   }
@@ -53,8 +54,9 @@ class MethodChannelQrBarCodeScannerDialog
 
 class ScannerWidget extends StatefulWidget {
   final void Function(String? code) onScanSuccess;
+  final CameraFacing cameraFacing;
 
-  const ScannerWidget({super.key, required this.onScanSuccess});
+  const ScannerWidget({super.key, required this.onScanSuccess, required this.cameraFacing});
 
   @override
   createState() => _ScannerWidgetState();
@@ -105,13 +107,13 @@ class _ScannerWidgetState extends State<ScannerWidget> {
   }
 
   Widget _buildQrView(BuildContext context) {
-    double smallestDimension = min(
-        MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
+    double smallestDimension = min(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height);
 
     smallestDimension = min(smallestDimension, 550);
 
     return QRView(
       key: qrKey,
+      cameraFacing: widget.cameraFacing,
       onQRViewCreated: (controller) {
         _onQRViewCreated(controller);
       },
